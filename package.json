@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
-    "follow-redirects": "^1.10.0"
+    "follow-redirects": "^1.10.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "scripts": {
