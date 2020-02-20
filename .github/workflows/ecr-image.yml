@@ -15,8 +15,8 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: "francisbilla/node-redirect-service"
-          TAG_NAME: "latest"
+          IMAGE_NAME: "francisbilla/chess"
+          TAG_NAME: "v1"
           LATEST: "true"
         
       - name: Build & Push to AWS ECR
