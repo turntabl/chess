@@ -1,0 +1,36 @@
+name: Service CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build & Push to AWS ECR
+        uses: opspresso/action-docker@master
+        with:
+          args: --ecr
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          IMAGE_URI: "xxxx.dkr.ecr.us-east-2.amazonaws.com/IMAGE_NAME"
+          TAG_NAME: "latest"
+          LATEST: "true"
+          
+      - name: OPEN SSH Private Key
+        uses: fifsky/ssh-action@master
+        with:
+          command: | 
+            cd Services-Registery
+            echo -e ${{ secrets.ENV }} > ./.envs/.${{ secrets.SERVICE }}
+            sudo docker-compose stop ${{ secrets.SERVICE }}
+            sudo docker-compose rm -f -v ${{ secrets.SERVICE }}
+            sudo docker-compose pull ${{ secrets.SERVICE }}
+            sudo docker-compose up -d --force-recreate --no-deps --build ${{ secrets.SERVICE }}
+            sudo docker-compose start ${{ secrets.SERVICE }}
+          host: ${{ secrets.EC2_HOST }}
+          user: ubuntu
+          key: ${{ secrets.EC2}}
+          args: "-tt -vvv"
