@@ -11,7 +11,7 @@ jobs:
       - name: Build & Push to AWS ECR
         uses: FrancisBilla/chess@rebuild
         with:
-          args: --ecr
+          args: --docker
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
