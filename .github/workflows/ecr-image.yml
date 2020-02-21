@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Build & Push to AWS ECR
-        uses: opspresso/action-docker@master
+        uses: FrancisBilla/chess@rebuild
         with:
           args: --ecr
         env:
