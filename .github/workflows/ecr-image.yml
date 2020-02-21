@@ -3,13 +3,13 @@ name: Service CI
 on: [push]
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Build & Push to Docker Hub
         uses: FrancisBilla/chess@rebuild
         with:
-          args: --docker
+          args: --docker    
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
