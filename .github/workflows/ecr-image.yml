@@ -9,7 +9,9 @@ jobs:
       - name: Build & Push to Docker Hub
         uses: FrancisBilla/chess@rebuild
         with:
-          args: --docker    
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --if-present    
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
