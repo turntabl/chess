@@ -34,7 +34,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
-          IMAGE_URI: "926377470665.dkr.ecr.us-east-2.amazonaws.com/chess"
+          IMAGE_URI: "htts://926377470665.dkr.ecr.us-east-2.amazonaws.com/chess"
           AWS_REGION: us-east-2
           TAG_NAME: "latest"
           LATEST: "true"
