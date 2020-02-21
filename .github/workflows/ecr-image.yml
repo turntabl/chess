@@ -4,30 +4,32 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-      - name: Build & Push to AWS ECR
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --if-present
+        
+      - name: Build & Push to Docker Hub
         uses: opspresso/action-docker@master
         with:
-          args: --ecr
+          args: --docker       
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          IMAGE_URI: "926377470665.dkr.ecr.us-east-2.amazonaws.com/chess"
-          AWS_REGION: us-east-2
+          IMAGE_NAME: "francisbilla/chess"
           TAG_NAME: "latest"
           LATEST: "true"
-          
-      - name: OPEN SSH Private Key
+      
+      - name: OPEN SSH Private Key 
         uses: fifsky/ssh-action@master
         with:
           command: | 
-            cd Services-Registery
-            echo -e ${{ secrets.ENV }} > ./.envs/.${{ secrets.SERVICE }}
+            cd Services-Registery            
             sudo docker-compose stop ${{ secrets.SERVICE }}
             sudo docker-compose rm -f -v ${{ secrets.SERVICE }}
             sudo docker-compose pull ${{ secrets.SERVICE }}
