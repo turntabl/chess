@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build & Push to Docker Hub
-        uses: FrancisBilla/chess@rebuild
+        uses: opspresso/action-docker@master
         with:
-          node-version: ${{ matrix.node-version }}       
+          args: --docker       
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -18,7 +18,7 @@ jobs:
           LATEST: "true"
       
       - name: Build & Push to AWS ECR
-        uses: FrancisBilla/chess@rebuild
+        uses: opspresso/action-docker@master
         with:
           args: --ecr
         env:          
