@@ -35,11 +35,11 @@ jobs:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
           IMAGE_URI: "926377470665.dkr.ecr.us-east-2.amazonaws.com/chess"
-          AWS_REGION: "us-east-2"
+          AWS_REGION: "aws ecr get-login --no-include-email --region us-east-2"
           TAG_NAME: "latest"
           LATEST: "true"
       
-      - name: OPEN SSH Private Key
+      - name: OPEN SSH Private Key 
         uses: fifsky/ssh-action@master
         with:
           command: | 
