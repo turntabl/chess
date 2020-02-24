@@ -12,7 +12,7 @@ http
       request.on("end", function() {
         try {
           var incomingData = body;
-          JSON.stringify(incomingData);
+         // JSON.stringify(incomingData);
           response.write(incomingData);
           response.writeHead(200, { "Content-Type": "text/plain" });
           response.end();
