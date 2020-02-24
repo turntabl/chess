@@ -21,8 +21,8 @@ http
            url: process.env.URLintegromat,          
             json: true,
             headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/x-www-form-urlencoded"
             },
             body: { incomingData }
           };
