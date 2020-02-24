@@ -12,9 +12,9 @@ http
       request.on("end", function() {
         try {
           var incomingData = JSON.parse(body);          
-         // JSON.stringify(incomingData);
+          JSON.stringify(incomingData);
           response.write(incomingData);
-          response.writeHead(200, { "Content-Type": "application/json" });
+          response.writeHead(200, { "Content-Type": "text/plain" });
           response.end();
           var options = {
             method: "post",          
