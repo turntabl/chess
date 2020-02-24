@@ -11,8 +11,8 @@ http
       });
       request.on("end", function() {
         try {
-          var incomingData = body;
-          JSON.stringify(incomingData);
+          var incomingData = JSON.parse(JSON.parse(json).body);          
+         // JSON.stringify(incomingData);
           response.write(incomingData);
           response.writeHead(200, { "Content-Type": "text/plain" });
           response.end();
@@ -21,8 +21,8 @@ http
            url: process.env.URLintegromat,          
             json: true,
             headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/x-www-form-urlencoded"
+              "Content-Type": "application/json",
+              Accept: "application/json"
             },
             body: { incomingData }
           };
