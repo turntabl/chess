@@ -11,8 +11,8 @@ http
       });
       request.on('end', function() {
         try {
-          var incomingData = body;      
-          response.write(JSON.stringify({ incomingData }));
+          var incomingData = JSON.parse( body );      
+          response.write( incomingData );
           response.writeHead(200, { 'content-type': 'application/json' });
           response.end();
           var options = {
@@ -23,7 +23,7 @@ http
               'Content-Type': 'application/json',
               Accept: 'application/json'
             },
-            body: { incomingData }
+            body: {  incomingData }
           };
           req.post(options);          
         } catch (err) {
