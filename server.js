@@ -12,8 +12,8 @@ http
       request.on('end', function() {
         try {
           var incomingData = body;      
-          response.write(incomingData);
-          response.writeHead(200, { 'Content-Type': 'text/plain' });
+          response.write(JSON.stringify({ incomingData }));
+          response.writeHead(200, { 'content-type': 'application/json' });
           response.end();
           var options = {
             method: 'post',          
