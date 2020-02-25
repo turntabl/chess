@@ -13,7 +13,7 @@ http
         try {
           var incomingData = JSON.parse( body );      
           response.write( incomingData );
-          response.writeHead(200, { 'content-type': 'application/json' });
+          response.writeHead( 200 );
           response.end();
           var options = {
             method: 'post',          
