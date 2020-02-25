@@ -11,8 +11,7 @@ http
       });
       request.on('end', function() {
         try {
-          var incomingData = body;          
-        //  JSON.stringify(incomingData);
+          var incomingData = body;      
           response.write(incomingData);
           response.writeHead(200, { 'Content-Type': 'text/plain' });
           response.end();
