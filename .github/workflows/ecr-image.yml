@@ -1,0 +1,41 @@
+name: Service CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --if-present
+        
+      - name: Build & Push to Docker Hub
+        uses: opspresso/action-docker@master
+        with:
+          args: --docker       
+        env:
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: "francisbilla/chess"
+          TAG_NAME: "latest"
+          LATEST: "true"
+      
+      - name: OPEN SSH Private Key 
+        uses: fifsky/ssh-action@master
+        with:
+          command: | 
+            cd Services-Registery            
+            sudo docker-compose stop ${{ secrets.SERVICE }}
+            sudo docker-compose rm -f -v ${{ secrets.SERVICE }}
+            sudo docker-compose pull ${{ secrets.SERVICE }}
+            sudo docker-compose up -d --force-recreate --no-deps --build ${{ secrets.SERVICE }}
+            sudo docker-compose start ${{ secrets.SERVICE }}
+          host: ${{ secrets.EC2_HOST }}
+          user: ubuntu
+          key: ${{ secrets.EC2}}
+          args: "-tt -vvv"
